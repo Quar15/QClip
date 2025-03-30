@@ -27,7 +27,7 @@ class Video(db.Model, UserMixin):
     pretty_name = db.Column(db.String(50), unique=False, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(UTC))
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(UTC))
-    views = db.Column(db.Integer)
+    views = db.Column(db.Integer, nullable=False, default=0)
     slug = db.Column(db.String(50), unique=True, nullable=False)
     path = db.Column(db.Text, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
