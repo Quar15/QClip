@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QClip</title>
+</head>
+<body>
+    <video id="video-player" controls>
+        <source src="{{url_for('main.serve_video', video_slug='xyz')}}", type="video/mp4">
+    </video>
+    <script>
+        let vid = document.querySelector("#video-player");
+        vid.currentTime = {{timestamp}};
+    </script>
+</body>
+</html>
