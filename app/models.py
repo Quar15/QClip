@@ -20,3 +20,16 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User({self.id}, '{self.username}')"
+
+
+class Video(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    pretty_name = db.Column(db.String(50), unique=False, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(UTC))
+    views = db.Column(db.Integer)
+    slug = db.Column(db.String(50), unique=True, nullable=False)
+    path = db.Column(db.Text, unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    user = db.relationship("User", backref=db.backref("videos"))

@@ -7,7 +7,7 @@
 </head>
 <body>
     <video id="video-player" controls>
-        <source src="{{url_for('main.serve_video', video_slug='xyz')}}", type="video/mp4">
+        <source src="{{url_for('main.serve_video', video_slug=video.slug)}}", type="video/mp4">
     </video>
     <script>
         let vid = document.querySelector("#video-player");
