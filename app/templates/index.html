@@ -37,7 +37,7 @@
     </nav>
     <div class="wrapper">
         {% for video in videos %}
-        <a href="{{ url_for('main.serve_video_player', video_slug=video.slug) }}" class="video">
+        <a href="{{ url_for('videos.serve_video_player', video_slug=video.slug) }}" class="video">
             <img src="{{ url_for('static', filename='img/not_found.png') }}">
             <div class="video-data">
                 <h3>{{video.pretty_name}}</h3>

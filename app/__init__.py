@@ -14,6 +14,7 @@ login_manager.login_message_category = 'info'
 
 from . import models
 
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -24,8 +25,12 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
 
     from .blueprints.main.routes import main
+    from .blueprints.users.routes import users
+    from .blueprints.videos.routes import videos
     from .blueprints.errors.handlers import errors
     app.register_blueprint(main)
+    app.register_blueprint(users)
+    app.register_blueprint(videos)
     app.register_blueprint(errors)
 
     return app

@@ -4,6 +4,8 @@ flask-migrate
 flask-bcrypt
 flask-login
 flask-wtf
+email_validator
+python-magic
 gunicorn
 pytest
 pytest-cov
