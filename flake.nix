@@ -37,6 +37,7 @@
     devShell.${system} = pkgs.mkShell {
       buildInputs = [flaskEnv];
       shellHook = ''
+        PS1='\n\[\e[1m\][\[\e[0;33m\]QClip\[\e[0;1m\]]\[\e[0m\]:$PWD | \[\e[0;2m\] $(git branch 2>/dev/null | grep '"'"'*'"'"' | colrm 1 2)\n\[\e[0m\]\$ '
         echo "QClip dev environment started."
       '';
     };
