@@ -11,21 +11,11 @@
   }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
-    python = pkgs.python312;
-    flaskEnv = python.withPackages (ps:
-      with ps; [
-        flask
-        flask-sqlalchemy
-        flask-migrate
-        flask-bcrypt
-        flask-login
-        flask-wtf
-        email_validator
-        python-magic
-        gunicorn
-        pytest
-        pytest-cov
-      ]);
+    python = pkgs.python311;
+    lib = nixpkgs.lib;
+    # read python pkgs from requirements.txt
+    requirements = builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile ./requirements.txt));
+    flaskEnv = python.withPackages (ps: builtins.map (pkg: builtins.getAttr pkg ps) (builtins.filter (pkg: builtins.hasAttr pkg ps) requirements));
 
     # Flask start script
     flaskApp = pkgs.writeShellScriptBin "start-qclip" ''
