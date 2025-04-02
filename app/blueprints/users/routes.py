@@ -7,10 +7,8 @@ from app.blueprints.users.forms import RegistrationForm, LoginForm
 users = Blueprint("users", __name__)
 
 
-@users.route("/register", methods=['GET', 'POST'])  # @TODO: Make admin only
+@users.route("/admin/user/create", methods=['GET', 'POST'])  # @TODO: Make admin only
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
