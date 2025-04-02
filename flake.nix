@@ -14,7 +14,7 @@
     python = pkgs.python311;
     lib = nixpkgs.lib;
     # read python pkgs from requirements.txt
-    requirements = builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile ./requirements.txt));
+    requirements = builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile ./requirements_dev.txt));
     flaskEnv = python.withPackages (ps: builtins.map (pkg: builtins.getAttr pkg ps) (builtins.filter (pkg: builtins.hasAttr pkg ps) requirements));
 
     # Flask start script
