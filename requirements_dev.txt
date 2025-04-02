@@ -7,3 +7,8 @@ flask-wtf
 email_validator
 python-magic
 gunicorn
+pytest
+pytest-cov
+mypy
+flake8
+tox
