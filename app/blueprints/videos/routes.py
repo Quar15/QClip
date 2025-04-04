@@ -6,7 +6,7 @@ from flask_login import login_required
 from werkzeug.exceptions import RequestEntityTooLarge
 from app import db
 from app.models import Video
-from app.utils import is_allowed_mime_type
+from app.utils import generate_thumbnail, is_allowed_mime_type
 
 videos = Blueprint("videos", __name__)
 
@@ -48,10 +48,21 @@ def upload():
     if not is_allowed_mime_type(file, [f"video/{extension}" for extension in current_app.config['ALLOWED_EXTENSIONS']]):
         return 'File is not a video! (MIME)'  # @TODO: Create pretty error
 
+    # Ensure required dirs exist - @NOTE: checking this on startup could be enough
+    upload_dir = current_app.config['UPLOAD_DIRECTORY']
+    if not upload_dir:
+        os.makedirs(upload_dir)
+
+    thumbnail_dir = current_app.config['THUMBNAIL_DIRECTORY']
+    if not thumbnail_dir:
+        os.makedirs(thumbnail_dir)
+
     slug = str(uuid.uuid4())
-    file_path = os.path.join(current_app.config['UPLOAD_DIRECTORY'], slug)
+    file_path = os.path.join(upload_dir, slug)
     file.save(file_path)
     video = Video()
+    thumbnail_path = os.path.join(thumbnail_dir, f"{slug}.jpg")
+    generate_thumbnail(file_path, thumbnail_path)
     video.pretty_name = "XYZ"  # @TODO
     video.slug = slug
     video.path = file_path

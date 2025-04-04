@@ -38,7 +38,7 @@
     <div class="wrapper">
         {% for video in videos %}
         <a href="{{ url_for('videos.serve_video_player', video_slug=video.slug) }}" class="video">
-            <img src="{{ url_for('static', filename='img/not_found.png') }}">
+            <img src="{{ url_for('static', filename=thumbnail_dir+video.slug+".jpg") }}">
             <div class="video-data">
                 <h3>{{video.pretty_name}}</h3>
                 <h4>by Nickname</h4>
