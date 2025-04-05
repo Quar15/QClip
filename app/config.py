@@ -11,6 +11,10 @@ class Config(object):
         UPLOAD_DIRECTORY = os.environ['APP_UPLOAD_DIRECTORY']
     else:
         UPLOAD_DIRECTORY = os.path.join(os.getcwd(), 'app/static', os.environ['APP_UPLOAD_DIRECTORY'])
+    if os.environ['APP_THUMBNAIL_DIRECTORY'].startswith('/'):
+        THUMBNAIL_DIRECTORY = os.environ['APP_THUMBNAIL_DIRECTORY']
+    else:
+        THUMBNAIL_DIRECTORY = os.path.join(os.getcwd(), 'app/static', os.environ['APP_THUMBNAIL_DIRECTORY'])
     MAX_CONTENT_LENGTH = int(os.environ['APP_UPLOAD_MAX_CONTENT_LENGTH']) * 1024 * 1024  # Calculate MB
     ALLOWED_EXTENSIONS = [
             'mp4',

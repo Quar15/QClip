@@ -175,6 +175,7 @@ cython_debug/
 
 # Project specific
 app/static/uploads
+app/static/thumbnails
 
 # flake outputs
 result
