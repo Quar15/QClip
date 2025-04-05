@@ -11,7 +11,7 @@ from app.utils import generate_thumbnail, is_allowed_mime_type
 videos = Blueprint("videos", __name__)
 
 
-@videos.route("/_f/<video_slug>")
+@videos.route("/_w/<video_slug>")
 def serve_video(video_slug: str):
     print("@DEBUG: Trying to show video: " + video_slug)
     video = Video.query.filter_by(slug=video_slug).first()
@@ -20,7 +20,19 @@ def serve_video(video_slug: str):
     return send_file(video.path, "video/mp4")
 
 
-@videos.route("/f/<video_slug>")
+@videos.route("/_w/<video_slug>/thumbnail")
+def serve_video_thumbnail(video_slug: str):
+    video = Video.query.filter_by(slug=video_slug).first()
+    if not video:
+        return send_file(os.path.join(current_app.root_path, "static/img/not_found.png"))
+    thumbnail_dir = current_app.config['THUMBNAIL_DIRECTORY']
+    thumbnail_path = f"{thumbnail_dir}/{video.slug}.jpg"
+    if not os.path.isfile(thumbnail_path):
+        return send_file(os.path.join(current_app.root_path, "static/img/not_found.png"))
+    return send_file(thumbnail_path, "image/jpg")
+
+
+@videos.route("/w/<video_slug>")
 def serve_video_player(video_slug: str):
     video = Video.query.filter_by(slug=video_slug).first()
     if not video:
@@ -48,14 +60,9 @@ def upload():
     if not is_allowed_mime_type(file, [f"video/{extension}" for extension in current_app.config['ALLOWED_EXTENSIONS']]):
         return 'File is not a video! (MIME)'  # @TODO: Create pretty error
 
-    # Ensure required dirs exist - @NOTE: checking this on startup could be enough
+    # Ensuring required dirs is done on startup
     upload_dir = current_app.config['UPLOAD_DIRECTORY']
-    if not upload_dir:
-        os.makedirs(upload_dir)
-
     thumbnail_dir = current_app.config['THUMBNAIL_DIRECTORY']
-    if not thumbnail_dir:
-        os.makedirs(thumbnail_dir)
 
     slug = str(uuid.uuid4())
     file_path = os.path.join(upload_dir, slug)

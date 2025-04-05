@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -23,6 +24,15 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     login_manager.init_app(app)
+
+    # Ensure required dirs exist
+    upload_dir = app.config['UPLOAD_DIRECTORY']
+    if not os.path.isdir(upload_dir):
+        os.makedirs(upload_dir)
+
+    thumbnail_dir = app.config['THUMBNAIL_DIRECTORY']
+    if not os.path.isdir(thumbnail_dir):
+        os.makedirs(thumbnail_dir)
 
     from .blueprints.main.routes import main
     from .blueprints.users.routes import users
