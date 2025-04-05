@@ -39,7 +39,7 @@
         </div>
     </nav>
     <div class="wrapper">
-        {% for video in videos %}
+        {% for video in videos_page.items %}
         <a href="{{ url_for('videos.serve_video_player', video_slug=video.slug) }}" class="video">
             <img src="{{ url_for('videos.serve_video_thumbnail', video_slug=video.slug) }}">
             <div class="video-data">
@@ -49,6 +49,27 @@
             </div>
         </a>
         {% endfor %}
+    </div>
+    <div class="pagination">
+        {% if videos_page.prev_num %}
+        <a class="btn" href="{{ url_for('main.index', page=videos_page.prev_num) }}">Prev</a>
+        {% endif %}
+        {% for page_num in videos_page.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if videos_page.page == page_num %}
+                <a class="btn" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                <a class="btn" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                <div class="btn">
+                    ...
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if videos_page.next_num %}
+        <a class="btn" href="{{ url_for('main.index', page=videos_page.next_num) }}">Next</a>
+        {% endif %}
     </div>
     <div class="popover" id="upload-popover" popover>
         <form hx-target="this" hx-swap="outerHTML" hx-get="{{ url_for('videos.upload_form') }}" hx-trigger="load">

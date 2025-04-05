@@ -133,6 +133,23 @@ nav .other .upload:hover {
     border-radius: 15px;
 }
 
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0 30px 0;
+}
+
+.pagination .btn {
+    padding: 10px 15px;
+    background-color: var(--background-main);
+    color: var(--text);
+    text-decoration: none;
+    border: 2px solid var(--background-secondary);
+    min-width: 15px;
+    text-align: center;
+}
+
 .notifications {
     position: fixed;
     right: 0;

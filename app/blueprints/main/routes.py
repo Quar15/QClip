@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, current_app, flash
+from flask import render_template, Blueprint, current_app, request
 from flask_login import current_user
 from app.models import Video
 
@@ -7,9 +7,10 @@ main = Blueprint("main", __name__)
 
 @main.route("/", methods=["GET"])
 def index():
-    videos = Video.query.all()
+    page = request.args.get('page', 1, type=int)
+    videos_page = Video.query.order_by(Video.created_at.desc()).paginate(page=page, per_page=50)
     thumbnail_dir = current_app.config['THUMBNAIL_DIRECTORY']
-    return render_template("index.html", videos=videos, thumbnail_dir=thumbnail_dir, user=current_user)
+    return render_template("index.html", videos_page=videos_page, thumbnail_dir=thumbnail_dir, user=current_user)
 
 
 @main.route("/partials/notifications", methods=["GET"])
