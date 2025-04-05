@@ -25,15 +25,18 @@
             </a>
         </div>
         <div class="other">
-            {% if user %}
+            {% if user.is_authenticated %}
             <button class="upload" popovertarget="upload-popover">
                 <i class='bx bx-upload'></i>
                 <p>Upload</p>
             </button>
             <div class="account">
-                <img src="">
                 <p>{{ user.username }}</p>
                 <a href="{{ url_for('users.logout') }}"><i class='bx bx-log-out'></i></a>
+            </div>
+            {% else %}
+            <div class="account">
+                <a href="{{ url_for('users.login') }}"><i class='bx bx-log-in'></i></a>
             </div>
             {% endif %}
         </div>
@@ -71,9 +74,11 @@
         <a class="btn" href="{{ url_for('main.index', page=videos_page.next_num) }}">Next</a>
         {% endif %}
     </div>
+    {% if user.is_authenticated %}
     <div class="popover" id="upload-popover" popover>
         <form hx-target="this" hx-swap="outerHTML" hx-get="{{ url_for('videos.upload_form') }}" hx-trigger="load">
     </div>
+    {% endif %}
     </form>
     {% include 'partials/notifications.html' %}
 </body>
