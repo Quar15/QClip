@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <meta name="htmx-config" content='{"responseHandling": [{"code":"...", "swap": true}]}'>
     <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 </head>
 <body>
@@ -24,15 +25,17 @@
             </a>
         </div>
         <div class="other">
-            <a class="upload" href="#">
+            {% if user %}
+            <button class="upload" popovertarget="upload-popover">
                 <i class='bx bx-upload'></i>
                 <p>Upload</p>
-            </a>
+            </button>
             <div class="account">
                 <img src="">
-                <p>Nickname</p>
-                <a href="#logout"><i class='bx bx-log-out'></i></a>
+                <p>{{ user.username }}</p>
+                <a href="{{ url_for('users.logout') }}"><i class='bx bx-log-out'></i></a>
             </div>
+            {% endif %}
         </div>
     </nav>
     <div class="wrapper">
@@ -41,15 +44,16 @@
             <img src="{{ url_for('videos.serve_video_thumbnail', video_slug=video.slug) }}">
             <div class="video-data">
                 <h3>{{video.pretty_name}}</h3>
-                <h4>by Nickname</h4>
+                <h4>by {{user.username}}</h4>
                 <h4>{{video.views}} Views | {{video.created_at}}</h4>
             </div>
         </a>
         {% endfor %}
     </div>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
+    <div class="popover" id="upload-popover" popover>
+        <form hx-target="this" hx-swap="outerHTML" hx-get="{{ url_for('videos.upload_form') }}" hx-trigger="load">
+    </div>
     </form>
+    {% include 'partials/notifications.html' %}
 </body>
 </html>

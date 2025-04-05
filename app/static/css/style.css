@@ -1,8 +1,10 @@
 :root {
-    --text: #EEE;
-    --text-secondary: #CCC;
+    --text: #eee;
+    --text-secondary: #ccc;
     --background-main: #0f0f0f;
     --background-secondary: #282828;
+    --alert-red: #f00;
+    --notification: rgb(98, 147, 255);
 }
 
 * {
@@ -17,6 +19,10 @@ body {
     background-color: var(--background-main);
     color: var(--text);
     font-family: "Inter";
+}
+
+.hidden {
+    display: none;
 }
 
 nav,
@@ -82,9 +88,15 @@ nav .other i {
 nav .other .upload {
     background-color: var(--background-secondary);
     padding: 7px 12px 7px 7px;
+    border: 1px solid var(--background-secondary);
     border-radius: 15px;
     color: var(--text);
     text-decoration: none;
+}
+
+nav .other .upload:hover {
+    background-color: var(--background-main);
+    cursor: pointer;
 }
 
 .wrapper {
@@ -119,6 +131,91 @@ nav .other .upload {
 .wrapper .video:hover {
     background-color: var(--background-secondary);
     border-radius: 15px;
+}
+
+.notifications {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+}
+
+.notifications .notification {
+    max-width: 350px;
+    padding: 15px;
+    margin: 15px;
+    background-color: var(--background-main);
+    border-left: 1px solid var(--background-secondary);
+    border-top: 1px solid var(--background-secondary);
+    border-bottom: 1px solid var(--background-secondary);
+    border-radius: 8px;
+    border-right: 8px solid var(--text);
+    color: var(--nav-text);
+    word-wrap: break-word;
+}
+
+.notification.error {
+    border-color: var(--alert-red);
+}
+
+.notification.success {
+    border-color: var(--notification);
+}
+
+.notifications .notification:hover {
+    cursor: pointer;
+    background-color: var(--background-secondary);
+}
+
+.popover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background-main);
+    color: var(--text);
+    border: none;
+    border-radius: 15px;
+    padding: 50px 100px;
+}
+
+form.video-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form.video-upload h2 {
+    margin-bottom: 10px;
+}
+
+form.video-upload .btn {
+    padding: 10px 20px;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-secondary);
+    border-radius: 15px;
+    color: var(--text);
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+form.video-upload .btn:hover {
+    background-color: var(--background-main);
+    cursor: pointer;
+}
+
+form.video-upload input {
+    background-color: var(--background-secondary);
+    color: var(--text);
+    border: 2px solid var(--background-secondary);
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    min-width: 350px;
 }
 
 @media only screen and (max-width: 600px) {
