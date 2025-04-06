@@ -194,7 +194,7 @@ nav .other .upload:hover {
     transform: translate(-50%, -50%);
     background-color: var(--background-main);
     color: var(--text);
-    border: none;
+    border: 2px solid var(--background-secondary);
     border-radius: 15px;
     padding: 50px 100px;
 }
