@@ -3,11 +3,14 @@ from flask_login import login_required, login_user, current_user, logout_user
 from app import db, bcrypt
 from app.models import User
 from app.blueprints.users.forms import RegistrationForm, LoginForm
+from app.utils import admin_required
 
 users = Blueprint("users", __name__)
 
 
-@users.route("/admin/user/create", methods=['GET', 'POST'])  # @TODO: Make admin only
+@users.route("/admin/user/create", methods=['GET', 'POST'])
+@login_required
+@admin_required
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -15,8 +18,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('users.login'))
+        flash(f"Account '{user.username}' has been created", 'success')
     return render_template('create_user.html', form=form)
 
 

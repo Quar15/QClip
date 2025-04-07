@@ -46,6 +46,13 @@ form {
     margin-bottom: 25px;
 }
 
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 form input[type='text'],
 form input[type='password'],
 form input[type='submit'] {

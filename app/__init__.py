@@ -38,9 +38,11 @@ def create_app(config_class=Config):
     from .blueprints.users.routes import users
     from .blueprints.videos.routes import videos
     from .blueprints.errors.handlers import errors
+    from .blueprints.commands.commands import commands
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(videos)
     app.register_blueprint(errors)
+    app.register_blueprint(commands)
 
     return app
