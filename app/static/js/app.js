@@ -14,7 +14,7 @@ function linkHandlingTitleFromFileUpload() {
             return;
         }
         let fileName = UPLOAD_VIDEO_FORM_FILE.files[0].name;
-        fileName = fileName.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+        fileName = fileName.replace(/[^a-z0-9áéíóúñüąćęłńóśźż \.,_-]/gim,"");
         fileName = fileName.replace(/[\_\-]/gim," ");
         fileName = fileName.replace(/\.[^/.]+$/, "");
         fileName = fileName.trim()
