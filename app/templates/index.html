@@ -44,7 +44,7 @@
     <div class="wrapper">
         {% for video in videos_page.items %}
         <a href="{{ url_for('videos.serve_video_player', video_slug=video.slug) }}" class="video">
-            <img src="{{ url_for('videos.serve_video_thumbnail', video_slug=video.slug) }}">
+            <img style="object-fit: cover" src="{{ url_for('videos.serve_video_thumbnail', video_slug=video.slug) }}">
             <div class="video-data">
                 <h3>{{video.pretty_name}}</h3>
                 <h4>by {{video.user.username}}</h4>
