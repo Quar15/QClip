@@ -299,3 +299,7 @@ video {
         display: none;
     }
 }
+
+.thumbnail {
+    object-fit: cover;
+}
